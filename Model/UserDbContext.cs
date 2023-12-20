@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ProfileService.Model;
 
 namespace TrailApp.Model
 {
@@ -13,6 +14,10 @@ namespace TrailApp.Model
         }
 
         public DbSet<User> User { get; set; }
+        public DbSet<Profile> Profile { get; set; }
+        public DbSet<Trail> Trail { get; set; }
+        public DbSet<Activity> Activity { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,7 +32,10 @@ namespace TrailApp.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().ToTable("Users", schema: "dbo");
+            modelBuilder.Entity<User>().ToTable("Users", schema: "CW2");
+            modelBuilder.Entity<Profile>().ToTable("Profile", schema: "CW2");
+            modelBuilder.Entity<Trail>().ToTable("Trail", schema: "CW2");
+            modelBuilder.Entity<Activity>().ToTable("Activity", schema: "CW2");
         }
 
     }

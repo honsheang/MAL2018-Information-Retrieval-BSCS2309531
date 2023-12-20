@@ -11,8 +11,8 @@ using TrailApp.Model;
 namespace TrailApp.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20231219052220_initialDb")]
-    partial class initialDb
+    [Migration("20231220132354_secondDb")]
+    partial class secondDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,32 @@ namespace TrailApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ProfileService.Model.Profile", b =>
+                {
+                    b.Property<string>("profileID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("creationDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("profileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("profileID");
+
+                    b.ToTable("Profile", "CW2");
+                });
 
             modelBuilder.Entity("TrailApp.Model.User", b =>
                 {
@@ -43,7 +69,7 @@ namespace TrailApp.Migrations
 
                     b.HasKey("userID");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", "CW2");
                 });
 #pragma warning restore 612, 618
         }

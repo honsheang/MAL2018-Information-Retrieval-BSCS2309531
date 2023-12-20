@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrailApp.Model;
 
@@ -10,9 +11,11 @@ using TrailApp.Model;
 namespace TrailApp.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    partial class UserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231220140750_initialDb")]
+    partial class initialDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,28 +23,6 @@ namespace TrailApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("ProfileService.Model.Activity", b =>
-                {
-                    b.Property<string>("activityID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("activityName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("activityTimePreference")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("units")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("activityID");
-
-                    b.ToTable("Activity", "CW2");
-                });
 
             modelBuilder.Entity("ProfileService.Model.Profile", b =>
                 {
@@ -67,32 +48,6 @@ namespace TrailApp.Migrations
                     b.HasKey("profileID");
 
                     b.ToTable("Profile", "CW2");
-                });
-
-            modelBuilder.Entity("ProfileService.Model.Trail", b =>
-                {
-                    b.Property<string>("trailID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("creationDate")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("trailName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("trailID");
-
-                    b.ToTable("Trail", "CW2");
                 });
 
             modelBuilder.Entity("TrailApp.Model.User", b =>
