@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
 using Microsoft.AspNetCore.Mvc;
 using ProfileService.Model;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,6 @@ var connectionString = builder.Configuration.GetConnectionString("AppDb");
 builder.Services.AddTransient<DataSeeder>();
 builder.Services.AddScoped<IDataRepository, DataRepository>();
 builder.Services.AddDbContext<UserDbContext>(x => x.UseSqlServer(connectionString));
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -20,7 +20,33 @@ builder.Services.AddSwaggerGen(c =>
         Title = "Trail App",
         Version = "v1"
     });
+
+    c.EnableAnnotations();
+
+    c.AddSecurityDefinition("basic", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "basic",
+        In = ParameterLocation.Header,
+        Description = "Basic Auth Header"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+    {
+        new OpenApiSecurityScheme
+        {
+            Reference = new OpenApiReference
+            {
+                Type = ReferenceType.SecurityScheme,
+                Id = "basic"
+            }
+        },
+        new string[]{ }
+    }
+    });
 });
+
 
 var app = builder.Build();
 app.UseSwaggerUI();
