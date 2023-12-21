@@ -115,6 +115,74 @@ namespace TrailApp.Model
             throw new NotImplementedException();
         }
 
-        
+
+        //Achievement//
+        public List<Achievement> GetAchievements() => db.Achievement.ToList();
+
+        public Achievement PutAchievement(Achievement achievement)
+        {
+            db.Achievement.Update(achievement);
+            db.SaveChanges();
+            return db.Achievement.Where(x => x.achievementID == achievement.achievementID).FirstOrDefault();
+        }
+
+        public List<Achievement> AddAchievement(Achievement achievement)
+        {
+            db.Achievement.Add(achievement);
+            db.SaveChanges();
+            return db.Achievement.ToList();
+        }
+
+        public Achievement GetAchievementById(string Id)
+        {
+            return db.Achievement.Where(x => x.achievementID == Id).FirstOrDefault();
+        }
+
+
+        //AchievementComment//
+        public List<AchievementComment> GetAchievementComments() => db.AchievementComment.ToList();
+
+        public AchievementComment PutAchievementComment(AchievementComment achievementComment)
+        {
+            db.AchievementComment.Update(achievementComment);
+            db.SaveChanges();
+            return db.AchievementComment.Where(x => x.achievementCommentID == achievementComment.achievementCommentID).FirstOrDefault();
+        }
+
+        public List<AchievementComment> AddAchievementComment(AchievementComment achievementComment)
+        {
+            db.AchievementComment.Add(achievementComment);
+            db.SaveChanges();
+            return db.AchievementComment.ToList();
+        }
+
+        public AchievementComment GetAchievementCommentById(string Id)
+        {
+            return db.AchievementComment.Where(x => x.achievementCommentID == Id).FirstOrDefault();
+        }
+
+
+        //EmergencyContact//
+        public List<EmergencyContact> GetEmergencyContacts() => db.EmergencyContact.ToList();
+
+        public EmergencyContact PutEmergencyContact(EmergencyContact EmergencyContact)
+        {
+            db.EmergencyContact.Update(EmergencyContact);
+            db.SaveChanges();
+            return db.EmergencyContact.Where(x => x.eContactID == EmergencyContact.eContactID).FirstOrDefault();
+        }
+
+        public List<EmergencyContact> AddEmergencyContact(EmergencyContact EmergencyContact)
+        {
+            db.EmergencyContact.Add(EmergencyContact);
+            db.SaveChanges();
+            return db.EmergencyContact.ToList();
+        }
+
+        public EmergencyContact GetEmergencyContactById(string Id)
+        {
+            return db.EmergencyContact.Where(x => x.eContactID == Id).FirstOrDefault();
+        }
+
     }
 }

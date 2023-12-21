@@ -27,5 +27,24 @@ namespace TrailApp.Model
         List<Activity> GetActivities();
         Activity PutActivity(Activity activity);
         Activity GetActivityById(string Id);
+
+        //Achievement
+        List<Achievement> AddAchievement(Achievement achievement);
+        List<Achievement> GetAchievements();
+        Achievement PutAchievement(Achievement achievement);
+        Achievement GetAchievementById(string Id);
+
+        //AchievementComment
+        List<AchievementComment> AddAchievementComment(AchievementComment achievementComment);
+        List<AchievementComment> GetAchievementComments();
+        AchievementComment PutAchievementComment(AchievementComment achievementComment);
+        AchievementComment GetAchievementCommentById(string Id);
+
+
+        //EmergencyContact
+        List<EmergencyContact> AddEmergencyContact(EmergencyContact EmergencyContact);
+        List<EmergencyContact> GetEmergencyContacts();
+        EmergencyContact PutEmergencyContact(EmergencyContact EmergencyContact);
+        EmergencyContact GetEmergencyContactById(string Id);
     }
 }

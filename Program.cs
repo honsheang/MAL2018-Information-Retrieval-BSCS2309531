@@ -106,7 +106,6 @@ app.MapPut("/trail/{id}", ([FromServices] IDataRepository db, Trail trail) =>
     return db.PutTrail(trail);
 });
 
-
 app.MapPost("/trail", ([FromServices] IDataRepository db, Trail trail) =>
 {
     return db.AddTrail(trail);
@@ -129,10 +128,76 @@ app.MapPut("/activity/{id}", ([FromServices] IDataRepository db, Activity activi
     return db.PutActivity(activity);
 });
 
-
 app.MapPost("/activity", ([FromServices] IDataRepository db, Activity activity) =>
 {
     return db.AddActivity(activity);
 });
+
+
+//Achievement
+app.MapGet("/achievement/{id}", ([FromServices] IDataRepository db, string id) =>
+{
+    return db.GetAchievementById(id);
+});
+
+app.MapGet("/achievements", ([FromServices] IDataRepository db) =>
+{
+    return db.GetAchievements();
+});
+
+app.MapPut("/achievement/{id}", ([FromServices] IDataRepository db, Achievement achievement) =>
+{
+    return db.PutAchievement(achievement);
+});
+
+app.MapPost("/achievement", ([FromServices] IDataRepository db, Achievement achievement) =>
+{
+    return db.AddAchievement(achievement);
+});
+
+
+//AchievementComment
+app.MapGet("/achievementcomment/{id}", ([FromServices] IDataRepository db, string id) =>
+{
+    return db.GetAchievementCommentById(id);
+});
+
+app.MapGet("/achievementcomments", ([FromServices] IDataRepository db) =>
+{
+    return db.GetAchievementComments();
+});
+
+app.MapPut("/achievementcomment/{id}", ([FromServices] IDataRepository db, AchievementComment achievementComment) =>
+{
+    return db.PutAchievementComment(achievementComment);
+});
+
+app.MapPost("/achievementcomment", ([FromServices] IDataRepository db, AchievementComment achievementComment) =>
+{
+    return db.AddAchievementComment(achievementComment);
+});
+
+//EmergencyContact
+app.MapGet("/emergencycontact/{id}", ([FromServices] IDataRepository db, string id) =>
+{
+    return db.GetEmergencyContactById(id);
+});
+
+app.MapGet("/emergencycontacts", ([FromServices] IDataRepository db) =>
+{
+    return db.GetEmergencyContacts();
+});
+
+app.MapPut("/emergencycontact/{id}", ([FromServices] IDataRepository db, EmergencyContact EmergencyContact) =>
+{
+    return db.PutEmergencyContact(EmergencyContact);
+});
+
+app.MapPost("/emergencycontact", ([FromServices] IDataRepository db, EmergencyContact EmergencyContact) =>
+{
+    return db.AddEmergencyContact(EmergencyContact);
+});
+
+
 
 app.Run();

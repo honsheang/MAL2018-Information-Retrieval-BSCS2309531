@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrailApp.Model;
 
@@ -10,9 +11,11 @@ using TrailApp.Model;
 namespace TrailApp.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    partial class UserDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231221042633_sixDb")]
+    partial class sixDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,36 +92,6 @@ namespace TrailApp.Migrations
                     b.HasKey("activityID");
 
                     b.ToTable("Activity", "CW2");
-                });
-
-            modelBuilder.Entity("ProfileService.Model.EmergencyContact", b =>
-                {
-                    b.Property<string>("eContactID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("eContactName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("mobileNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("relationship")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("userID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("eContactID");
-
-                    b.ToTable("EmergencyContact", "CW2");
                 });
 
             modelBuilder.Entity("ProfileService.Model.Profile", b =>
