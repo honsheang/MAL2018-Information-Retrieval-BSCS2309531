@@ -136,7 +136,7 @@ app.MapPost("/trail", ([FromServices] IDataRepository db, Trail trail) =>
 });
 
 
-//Trail
+//Activity
 app.MapGet("/activity/{id}", ([FromServices] IDataRepository db, string id) =>
 {
     return db.GetActivityById(id);
