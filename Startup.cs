@@ -39,13 +39,6 @@ namespace ProfileService
             {
                 c.EnableAnnotations();
 
-                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-                {
-                    Title = "This is Title",
-                    Version = "v1",
-                    Description = "This is Description"
-                });
-
                 c.AddSecurityDefinition("basic", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",

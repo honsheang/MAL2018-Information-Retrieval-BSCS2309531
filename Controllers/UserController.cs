@@ -4,9 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using ProfileService.Model;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
-using TrailApp.Model;
+using System.Threading.Tasks;
 
 namespace ProfileService.Controllers
 {
@@ -16,58 +17,56 @@ namespace ProfileService.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        List<User> _users = new List<User>();
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        //public UserController() 
-        //{
-        //    _users = new List<User>();
-        //    for(int i = 1; i <= 9; i++)
-        //    {
-        //        _users.Add(new User()
-        //        {
-        //            userID = i,
-        //            Name = "Usr" + i,
-        //            Roll = "100" + i
-        //        });
-        //    }
-        //}
-        // GET: api/users
-        public IEnumerable<User> Get()
+        public UserController(IHttpClientFactory httpClientFactory)
         {
-            return _users;
+            _httpClientFactory = httpClientFactory;
         }
 
         [HttpPost, Route("login")]
-        public IActionResult Login(Login login)
+        public async Task<IActionResult> Login(Login login)
         {
             try
             {
-                if (string.IsNullOrEmpty(login.email) ||
-                string.IsNullOrEmpty(login.password))
-                    return BadRequest("Username and/or Password not specified");
-                if (login.email.Equals("grace@plymouth.ac.uk") && login.password.Equals("ISAD123!"))
+                if (string.IsNullOrEmpty(login.email) || string.IsNullOrEmpty(login.password))
+                    return BadRequest("Email and/or Password not specified");
+
+                // Send a POST request to validate user credentials through the external API
+                var apiUrl = "https://web.socem.plymouth.ac.uk/COMP2001/auth/api/users";
+
+                var client = _httpClientFactory.CreateClient();
+
+                var response = await client.PostAsJsonAsync(apiUrl, new { Email = login.email, Password = login.password });
+
+                if (response.IsSuccessStatusCode)
                 {
-                    var secretKey = new SymmetricSecurityKey
-                    (Encoding.UTF8.GetBytes("thisisasecretkey@123"));
-                    var signinCredentials = new SigningCredentials
-                    (secretKey, SecurityAlgorithms.HmacSha256);
+                    var token = await response.Content.ReadAsStringAsync();
+
+                    // User validated - generate a JWT token based on the validated user data
+                    var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("thisisasecretkey@123"));
+                    var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                     var jwtSecurityToken = new JwtSecurityToken(
-                        issuer: "ABCXYZ",
+                        issuer: "Sheang",
                         audience: "http://localhost:51398",
-                        claims: new List<Claim>(),
+                        claims: new[] { new Claim(ClaimTypes.Name, login.email) },
                         expires: DateTime.Now.AddMinutes(10),
                         signingCredentials: signinCredentials
                     );
-                    Ok(new JwtSecurityTokenHandler().
-                    WriteToken(jwtSecurityToken));
+
+                    var tokenString = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                    return Ok(tokenString);
+                }
+                else
+                {
+                    return Unauthorized();
                 }
             }
             catch
             {
-                return BadRequest
-                ("An error occurred in generating the token");
+                return BadRequest("An error occurred in generating the token");
             }
-            return Unauthorized();
         }
     }
 }
+

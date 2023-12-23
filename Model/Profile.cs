@@ -9,6 +9,8 @@ namespace ProfileService.Model
         public string description { get; set; }
         public string creationDate { get; set; }
         public string role { get; set; }
+        public string userID { get; set; }
+        public string trailID { get; set; }
     }
 
     public class ProfileCollection
@@ -25,7 +27,9 @@ namespace ProfileService.Model
                     profileName = "graceHop",
                     description = "Enthusiastic hiker",
                     creationDate = "2023-01-15 09:00:00",
-                    role = "Admin"
+                    role = "Admin",
+                    userID = "1",
+                    trailID = "1"
                 },
                 new Profile()
                 {
@@ -33,7 +37,9 @@ namespace ProfileService.Model
                     profileName = "TBL",
                     description = "Nature lover",
                     creationDate = "2023-02-01 10:30:00",
-                    role = "User"
+                    role = "User",
+                    userID = "2",
+                    trailID = "2"
                 },
                 new Profile()
                 {
@@ -41,7 +47,9 @@ namespace ProfileService.Model
                     profileName = "Ada",
                     description = "Sea lover",
                     creationDate = "2023-04-13 11:10:00",
-                    role = "User"
+                    role = "User",
+                    userID = "3",
+                    trailID = "3"
                 }
             };
         }

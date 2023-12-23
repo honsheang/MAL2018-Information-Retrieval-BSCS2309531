@@ -65,8 +65,6 @@ void SeedData(IHost app)
     }
 }
 
-
-
 app.UseSwagger(x => x.SerializeAsV2 = true);
 
 
